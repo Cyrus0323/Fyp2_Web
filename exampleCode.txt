@@ -1,0 +1,9 @@
+// read data
+const db = firebase.database()
+db.ref('path').on('value', (snapshot) => {
+    console.log(snapshot.val())
+})
+
+// write data
+const db = firebase.database()
+db.ref('path').set('value')
