@@ -4,3 +4,71 @@
 .App {
   text-align: center;
 }
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.logo {
+  height: 65px;
+  background: white;
+  margin: 0 auto;
+  padding: 4px 0;
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.main {
+  width: 468px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin: 0 auto;
+  @media screen and (max-width: @screen-sm) {
+    width: 95%;
+  }
+}
+
+.ant-layout-header {
+  padding-left: 16px;
+  box-shadow: @shadow-1-down;
+  background-color: #37809b;
+
+  span:hover {
+    svg {
+      fill: #fff;
+    }
+
+    a {
+      color: #b9f6fa;
+    }
+  }
+
+  .anticon {
+    padding: 8px;
+  }
+}
+
+.ant-layout-sider {
+  box-shadow: @shadow-1-right;
+  background-color: #cde9e9 ;
+
+  .ant-menu {
+    width: 100%;
+    background-color: inherit;
+  }
+
+  .sider__space > * {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .flex-center > * {
+    height: 100%;
+  }
+}
