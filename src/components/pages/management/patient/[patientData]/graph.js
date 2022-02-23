@@ -1,58 +1,77 @@
 import { Line } from '@antv/g2plot'
-import { ref, onValue } from 'firebase/database'
-import { useState, useEffect, useRef } from 'react'
+import { ref, onValue, off } from 'firebase/database'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { db, auth } from '../../../../../firebase/firebase'
-import { getTodayDateInString } from '../../../../../lib/utils/extra'
+import { DatePicker, Space } from 'antd'
+
+import { db } from '../../../../../firebase/firebase'
+import moment from 'moment'
 
 const PulseRateGraph = () => {
   const param = useParams()
-  const patientPulseDataRef = ref(db, `Users/${param.key}/Connection/Pulse/Readings`)
   const [data, setData] = useState([])
-  const today = getTodayDateInString()
-  console.log(today)
-  // const data = []
+  const [date, setDate] = useState(moment().startOf('date'))
+  const patientPulseDataRef = ref(
+    db,
+    `Users/${param.key}/Connection/Pulse/Readings/${date.format('YYYY-MM-DD').toString()}`
+  )
+  console.log(patientPulseDataRef.toString())
+
+  const disabledDate = (current) => {
+    const now = moment().startOf('date')
+    const ninetyDaysAgo = moment().subtract(90, 'days').startOf('date') // today minus 90 days
+
+    return ninetyDaysAgo.isAfter(current.startOf('date')) || now.isBefore(current.startOf('date'))
+  }
 
   useEffect(() => {
     onValue(patientPulseDataRef, (snapshot) => {
       const tmpData = []
       if (snapshot.exists()) {
-        // setIsLoading(true)
-
         snapshot.forEach((reading) => {
-          const key = reading.key // date
-          const part = key.split(' ')
-          const day = part[2]
-          const month = part[1]
-          const year = part[5]
-          const time = part[3]
-
+          const time = reading.key
           tmpData.push({ time: time, bpm: reading.val() })
         })
 
         // console.log(tmpData)
-        setData(tmpData)
       }
+      setData(tmpData)
     })
-  }, [])
+  }, [date])
 
   useEffect(() => {
-    document.getElementById("pulseGraph").innerHTML = ""
-    if (data.length > 0) {
-      const line = new Line('pulseGraph', {
-        data,
-        padding: 'auto',
-        xField: 'time',
-        yField: 'bpm' // 'Beats Per Minute',
-      })
+    document.getElementById('pulseGraph').innerHTML = ''
+    console.log(data)
+    // if (data.length > 0) {
+    const line = new Line('pulseGraph', {
+      data,
+      padding: 'auto',
+      xField: 'time',
+      yField: 'bpm' // 'Beats Per Minute',
+    })
 
-      line.render()
-    } else {
-      document.getElementById("pulseGraph").innerHTML = "No data"
-    }
+    line.render()
+    // } else {
+    // document.getElementById("pulseGraph").innerHTML = "No data"
+    // }
   }, [data])
 
-  return <div id="pulseGraph"></div>
+  return (
+    <>
+      <DatePicker
+        style={{ marginBottom: '35px' }}
+        disabledDate={disabledDate}
+        onChange={(selectedDate) => {
+          off(patientPulseDataRef)
+          setDate(selectedDate)
+        }}
+        defaultValue={date}
+        allowClear={false}
+      />
+
+      <div id="pulseGraph"></div>
+    </>
+  )
 }
 
 export default PulseRateGraph

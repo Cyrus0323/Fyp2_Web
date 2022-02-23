@@ -11,14 +11,14 @@ const PatientData = () => {
       tab: 'Pulse Rate'
     },
     {
-      key: 'bloodPressureRate',
-      tab: 'Blood Pressure Rate'
+      key: 'other',//'bloodPressureRate',
+      tab: 'Other'//'Blood Pressure Rate'
     }
   ]
 
   const contentList = {
     pulseRate: <PulseRateGraph />,
-    bloodPressureRate: <p>Blood Pressure Rate</p>
+    other: <p>Other measurement for future enhancement</p>
   }
 
   return (
