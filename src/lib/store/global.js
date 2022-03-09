@@ -4,7 +4,8 @@ const initialValue = {
   isLoggedIn: false,
   modalVisible: false,
   selectedRow: null,
-  isLoading: false
+  isLoading: false,
+  consecutiveRecord: []
 }
 
 const globalStore = proxy({ ...initialValue })

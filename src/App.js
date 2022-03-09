@@ -15,7 +15,6 @@ import { useSnapshot } from 'valtio'
 
 function PrivateRoute({ children, redirectTo }) {
   const state = useSnapshot(globalStore)
-  console.log(state)
   return state.isLoggedIn ? children : <Navigate to={redirectTo} />
 }
 
@@ -57,7 +56,7 @@ function App() {
 
 new Promise(() => {
   checkAuthorization()
-}).catch(error => {
+}).catch((error) => {
   console.log(error)
 })
 
