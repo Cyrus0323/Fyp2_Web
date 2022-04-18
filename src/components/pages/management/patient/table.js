@@ -56,7 +56,9 @@ const PatientTable = () => {
       render: (value, record) => {
         return (
           <>
-            <Link style={{color: '#37D8FD'}} to={`/healthcare/management/patients/${record.key}`}>View</Link>
+            <Link style={{ color: '#37D8FD' }} to={`/healthcare/management/patients/${record.key}`}>
+              View
+            </Link>
           </>
         )
       }
@@ -82,9 +84,14 @@ const PatientTable = () => {
           columns={columns}
           dataSource={rows}
           onChange={(pagination, filters, sorter) => {
-            console.log(pagination)
+            setPage(pagination.current)
           }}
-          pagination={{ total: rows.length, pageSize: limit, current: page }}
+          pagination={{
+            total: rows.length,
+            pageSize: limit,
+            current: page,
+            position: ['none', 'bottomCenter']
+          }}
           scroll={{ x: 570 }}
           sticky
         />

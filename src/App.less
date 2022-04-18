@@ -54,7 +54,7 @@ img {
 
   .anticon-bell:hover {
     svg {
-      fill: #BDFB62;
+      fill: #bdfb62;
     }
   }
 
@@ -66,23 +66,38 @@ img {
   }
 }
 
-.ant-list-header {
-  position: sticky;
-  top: 0;
+.notification-list {
+  .ant-list-header {
+    position: sticky;
+    top: 0;
+  }
+
+  .ant-list-items {
+    height: 50vh;
+    overflow-y: auto;
+  }
+
+  .ant-list-item:hover {
+    background: #deeaee;
+  }
 }
 
-.ant-list-items {
-  height: 50vh;
-  overflow-y: auto;
+.appointment-card {
+  .ant-card-body {
+    height: 34vh;
+  }
 }
 
-.ant-list-item:hover {
-  background: #deeaee;
+.appointment-list {
+  .ant-list-items {
+    height: 28vh;
+    overflow-y: auto;
+  }
 }
 
 .ant-layout-sider {
   box-shadow: @shadow-1-right;
-  background-color: #cde9e9 ;
+  background-color: #cde9e9;
 
   .ant-menu {
     width: 100%;
@@ -97,5 +112,9 @@ img {
 
   .flex-center > * {
     height: 100%;
+  }
+
+  .ant-layout-sider-trigger {
+    background: #56b6ae;
   }
 }

@@ -5,7 +5,13 @@ import { Link, Navigate } from 'react-router-dom'
 import { ref, onValue } from 'firebase/database'
 
 import { db, auth } from '../../firebase/firebase'
-import { browserSessionPersistence, sendEmailVerification, setPersistence, signInWithEmailAndPassword } from 'firebase/auth'
+import {
+  browserSessionPersistence,
+  onAuthStateChanged,
+  sendEmailVerification,
+  setPersistence,
+  signInWithEmailAndPassword
+} from 'firebase/auth'
 import globalStore from '../../lib/store/global'
 import { useSnapshot } from 'valtio'
 
@@ -18,7 +24,7 @@ const SignInForm = () => {
   const handleSubmit = (values) => {
     // validate the role='doctor' with email
     const doctorRef = ref(db, 'Doctors')
-    var validEmail = []
+    let validEmail = []
     onValue(doctorRef, (snapshot) => {
       snapshot.forEach((doctor) => {
         validEmail.push(doctor.val().email)
@@ -40,7 +46,7 @@ const SignInForm = () => {
           }
         })
         .catch((error) => {
-          console.log(error.code)
+          console.log(error)
           if (error.code === 'auth/too-many-requests') {
             message.error('Please try again later')
           } else if (error.code === 'auth/wrong-password')
@@ -51,12 +57,25 @@ const SignInForm = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      setIsRedirect(true)
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const doctorPath = ref(db, `Doctors/${user.uid}/attach`)
+          onValue(doctorPath, (snapshot) => {
+            const tmpKey = []
+            snapshot.forEach((patientKey) => {
+              tmpKey.push({ key: patientKey.val() })
+            })
+
+            globalStore.patientKey = tmpKey
+            setIsRedirect(true)
+          })
+        }
+      })
     }
   }, [isLoggedIn])
 
   if (isRedirect) {
-    return <Navigate to='/healthcare/dashboard' />
+    return <Navigate to="/healthcare/dashboard" />
   }
 
   return (

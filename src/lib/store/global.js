@@ -5,7 +5,8 @@ const initialValue = {
   modalVisible: false,
   selectedRow: null,
   isLoading: false,
-  consecutiveRecord: []
+  patientKey: [],
+  refresh: 0
 }
 
 const globalStore = proxy({ ...initialValue })

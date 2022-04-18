@@ -1,5 +1,10 @@
-import { BookOutlined, DashboardOutlined, SolutionOutlined } from '@ant-design/icons/lib/icons'
-import { Layout, Menu, notification, Space } from 'antd'
+import {
+  BookOutlined,
+  DashboardOutlined,
+  SolutionOutlined,
+  CalendarOutlined
+} from '@ant-design/icons/lib/icons'
+import { Layout, Menu, notification, Space, Typography } from 'antd'
 import { onAuthStateChanged } from 'firebase/auth'
 import { limitToLast, onValue, query, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
@@ -11,7 +16,7 @@ import { auth, db } from '../firebase/firebase'
 
 const AuthenticatedLayout = () => {
   const { Content, Footer, Sider } = Layout
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(true)
   const [selectedMenu, setSelectedMenu] = useState([])
   const [pkey, setPkey] = useState([])
   const location = useLocation()
@@ -110,49 +115,45 @@ const AuthenticatedLayout = () => {
 
   return (
     <Layout hasSider={true}>
-      <Sider trigger={null} width={220} collapsedWidth={0} collapsible={true} collapsed={collapsed}>
+      <Sider
+        width={200}
+        collapsible={true}
+        collapsed={collapsed}
+        onCollapse={() => setCollapsed(!collapsed)}
+      >
         <Space
           className="sider__space"
           direction="vertical"
           style={{ alignItems: 'center', justifyContent: 'center', width: '100%' }}
         >
           <Link to="/healthcare/dashboard">
-            <div className="logo" style={{ display: 'block' }}>
+            <div className="logo">
               <img src="/logo192.png" style={{ width: '100%' }} alt="logo" />
             </div>
           </Link>
           <Menu mode="inline" selectable={true} selectedKeys={selectedMenu}>
-            <Menu.Item key="/healthcare/dashboard">
-              <Link to="/healthcare/dashboard">
-                <DashboardOutlined />
-                <span>Dashboard</span>
-              </Link>
+            <Menu.Item key="/healthcare/dashboard" icon={<DashboardOutlined />}>
+              <Link to="/healthcare/dashboard">Dashboard</Link>
             </Menu.Item>
-            <Menu.SubMenu
-              key="/healthcare/management"
-              title={
-                <>
-                  <BookOutlined />
-                  <span>Management</span>
-                </>
-              }
-            >
-              <Menu.Item key="/healthcare/management/patients">
-                <Link to="/healthcare/management/patients">
-                  <SolutionOutlined />
-                  <span>Patient Management</span>
-                </Link>
+            <Menu.SubMenu key="/healthcare/management" title={`Management`} icon={<BookOutlined />}>
+              <Menu.Item key="/healthcare/management/patients" icon={<SolutionOutlined />}>
+                <Link to="/healthcare/management/patients">Patient</Link>
+              </Menu.Item>
+              <Menu.Item key="/healthcare/management/appointments" icon={<CalendarOutlined />}>
+                <Link to="/healthcare/management/appointments">Appointment</Link>
               </Menu.Item>
             </Menu.SubMenu>
           </Menu>
         </Space>
       </Sider>
       <Layout>
-        <LayoutHeader collapsed={collapsed} setCollapsed={setCollapsed} />
+        <LayoutHeader />
         <Content>
           <Outlet />
         </Content>
-        <Footer></Footer>
+        <Footer style={{ textAlign: 'center' }}>
+          Heart Monitoring System ©2022 Created by UTAR FYP Team
+        </Footer>
       </Layout>
     </Layout>
   )

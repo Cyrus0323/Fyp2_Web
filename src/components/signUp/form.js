@@ -45,7 +45,7 @@ const SignUpForm = () => {
         <Title level={1} style={{ textAlign: 'center' }}>
           Sign Up
         </Title>
-        <img src="/logo.jpeg" height="250" style={{ width: '100%' }} alt="logo" />
+        <img src="/logo.jpg" height="250" style={{ width: '100%' }} alt="logo" />
         <Title level={2} style={{ textAlign: 'center' }}>
           Heart Disease Assistant
         </Title>

@@ -132,7 +132,7 @@ const RequestForm = ({ form }) => {
           key="email"
           name="email"
           label="Patient's email"
-          rules={[{ required: true, message: "Patient's is required" }]}
+          rules={[{ required: true, message: "Patient's email is required" }]}
         >
           <Input type="email" />
         </Form.Item>

@@ -173,6 +173,7 @@ const LayoutHeader = ({ collapsed, setCollapsed }) => {
   const notificationList = (
     <>
       <List
+        className="notification-list"
         style={{ background: '#fff' }}
         header={
           <div>
@@ -245,12 +246,12 @@ const LayoutHeader = ({ collapsed, setCollapsed }) => {
     <>
       <Header>
         <Space direction="horizontal" style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Space direction="horizontal">
-            {collapsed ? (
+          <Space direction="horizontal" style={{ marginLeft: 25 }}>
+            {/* {collapsed ? (
               <MenuUnfoldOutlined onClick={toggle} />
             ) : (
               <MenuFoldOutlined onClick={toggle} />
-            )}
+            )} */}
             <Breadcrumb separator=">">
               {breadcrumbList.map((breadcrumb, i) => {
                 return i === 0 ? (

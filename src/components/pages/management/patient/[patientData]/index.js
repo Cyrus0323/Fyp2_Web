@@ -3,8 +3,10 @@ import { onValue, ref } from 'firebase/database'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { db } from '../../../../../firebase/firebase'
+import AppointmentRemarks from './appointment_remarks'
 import PulseRateGraph from './graph'
 import RealtimePulseRateGraph from './graph_realtime'
+import MedicationManagement from './medication_index'
 
 const PatientData = () => {
   const param = useParams()
@@ -28,15 +30,20 @@ const PatientData = () => {
       tab: 'Pulse Rate'
     },
     {
-      key: 'other', //'bloodPressureRate',
-      tab: 'Other' //'Blood Pressure Rate'
+      key: 'medication',
+      tab: 'Medication'
+    },
+    {
+      key: 'appointment',
+      tab: 'Appointment Follow-up'
     }
   ]
 
   const contentList = {
     pulseRateRealtime: <RealtimePulseRateGraph />,
     pulseRate: <PulseRateGraph />,
-    other: <p>Other measurement for future enhancement</p>
+    medication: <MedicationManagement />,
+    appointment: <AppointmentRemarks />
   }
 
   return (
