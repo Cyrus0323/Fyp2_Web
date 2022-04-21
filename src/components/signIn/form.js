@@ -120,7 +120,7 @@ const SignInForm = () => {
             <Link to="/sign-up">Register?</Link>
           </div>
           <div>
-            <Link to="/">Forgot Password</Link>
+            <Link to="/forgot-password">Forgot Password</Link>
           </div>
         </div>
       </Space>

@@ -17,6 +17,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from './firebase/firebase'
 import { onValue, ref } from 'firebase/database'
 import PostAppointmentFollowUp from './components/crontab/appointment'
+import ForgotPassword from './components/forgot_password'
 
 function PrivateRoute({ children, redirectTo }) {
   const state = useSnapshot(globalStore)
@@ -71,6 +72,7 @@ function App() {
           </Route>
           <Route exact path="/" element={<SignIn />} />
           <Route exact path="/sign-up" element={<SignUp />} />
+          <Route exact path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </Router>
     </Suspense>
